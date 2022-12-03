@@ -1,4 +1,0 @@
-SELECT 
-    *
-FROM
-    movies.movies;
