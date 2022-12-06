@@ -1,10 +1,18 @@
 # I'm going to have the app ask the user what they would like to do, with options to view, update, add, or delete an entry.
 
+
+
 def enterChoice() -> int:
     """A function that prompts the user for a choice and returns an integer 1-[option_count] to represent the chosen option, or 0 to indicate an error."""
+    options = ["1 - View an entry", "2 - Update an entry", "3 - Add an entry", "4 - Delete an entry", "5 - View a subset of entries", "6 - End the program"] 
     option_count = 6
-    choice = input("What would you like to do?\n1 - View an entry\n2 - Update an entry\n3 - Add an entry\n4 - Delete an entry\n5 - View a subset of entries\n6 - End the program\n")
-    return choice if 1 <= choice <= option_count else 0
+    choice = input(f"What would you like to do?\n{[f"{option}\n" for option in options]}")
+    if 1 <= choice <= option_count: # if a valid option has been selected
+        return choice
+    else: # if the user input is an invalid selection
+        while True:
+            choice = input (f"What would you like to do?\n{[f"{option}\n" for option in options]}\n")
+             
 
 def getMoviesByID() -> str:
     """Return a specific movie by ID."""
