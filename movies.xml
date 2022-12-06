@@ -898,7 +898,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<row>
 		<field name="MOV_ID">100</field>
-		<field name="MOV_TITLE">Fast & Furious 6</field>
+		<field name="MOV_TITLE">Fast and Furious 6</field>
 		<field name="MOV_GENRE">Action</field>
 		<field name="MOV_YEAR">2013</field>
 		<field name="MOV_LANG">ENG</field>
