@@ -27,7 +27,7 @@ def get_movies_by_id() -> list:
     return movies
 
 def get_movies_by_year() -> list:
-    """Returns all movies made in the given year"""
+    """Returns all movies made in the given range of years"""
     movies = []
     while keep_going:
         min_year = input(f"Please enter the earliest year you want to see: ")
@@ -41,7 +41,7 @@ def get_movies_by_year() -> list:
     return movies
 
 def get_movies_by_genre() -> list:
-    """Returns all movies of the given genre"""
+    """Returns all movies of the given genres"""
     movies = []
     while keep_going:
         id = input(f"Please enter the : ")
@@ -54,7 +54,7 @@ def get_movies_by_genre() -> list:
     return movies
 
 def get_movies_by_language() -> list:
-    """Returns all movies in the given language"""
+    """Returns all movies in the given languages"""
     movies = []
     while keep_going:
         id = input(f"Please enter the ID of the movie you're looking for: ")
@@ -67,7 +67,7 @@ def get_movies_by_language() -> list:
     return movies
 
 def get_movies_by_rating() -> list:
-    """Returns all movies within a given range of ratings, or with a specific rating"""
+    """Returns all movies with a given set of ratings, or with a specific rating"""
     movies = []
     while keep_going:
         id = input(f"Please enter the ID of the movie you're looking for: ")
