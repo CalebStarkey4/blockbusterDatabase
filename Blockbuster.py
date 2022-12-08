@@ -1,4 +1,8 @@
 from xml.dom import minidom
+import sqlite3 as sql
+import xml.etree.ElementTree as ET
+from urllib.request import urlopen
+import gc
 
 def addRecord():
     print("This is to add a record.")
@@ -13,7 +17,85 @@ def updateRecord():
 
     
 def getRecord():
-    file = minidom.parse('movies.xml')
+
+    """conn = sql.connect("moviesDB.db")
+    cur = conn.cursor()
+
+    createTableCommand = CREATE TABLE NSA_DATA (
+    username VARCHAR(50),
+    phonenumber VARCHAR(15),
+    password VARCHAR(50),
+    baddeedcount INT,
+    secrets VARCHAR(250)
+    );
+
+    cur.execute(createTableCommand)
+    conn.commit()"""
+
+
+    
+
+    dburl = ("http://www.w3.org/2001/XMLSchema-instance")
+
+    root = ET.parse(urlopen(dburl)).getroot()
+    cpids = [el.text for el in root.findall('.//user/cpid')]
+    print(cpids)
+
+    conn = sql.connect("GridcoinTeam.db")
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS GRIDCOINTEAM (cpid TEXT)''') 
+    c.executemany("INSERT INTO GRIDCOINTEAM VALUES (?);", cpids)
+    conn.commit()       
+    conn.close()
+
+    conn = sql.connect("GridcoinTeam.db")
+    c = conn.cursor()
+    cpids = c.execute('select cpid from GRIDCOINTEAM').fetchall()
+    conn.close()
+
+    print(cpids)
+
+    gc.collect()
+
+    
+
+    """rawxml='''<?xml version="1.0" encoding="UTF-8" ?>
+    <chat xmlns="http://test.org/net/1.3">
+        <event sender="Frank" time="2016-02-03T22:58:19+01:00" />
+        <message sender="Karen" time="2016-02-03T22:58:19+01:00">
+            <div>
+                <span>Hello Frank</span>
+            </div>
+        </message>
+        <message sender="Frank" time="2016-02-03T22:58:39+01:00">
+            <div>
+                <span>Hi there Karen</span>
+            </div>
+            <div>
+                <span>I'm back from New York</span>
+            </div>
+        </message>
+        <message sender="Karen" time="2016-02-03T22:58:56+01:00">
+            <div>
+                <span>How are you doing?</span>
+                <span>Everything OK?</span>
+            </div>
+        </message>
+    </chat>'''
+
+    ns={'msg' : "http://test.org/net/1.3"}
+    xml = ET.fromstring(rawxml)
+
+    for msg in xml.findall("msg:message", ns):
+        print("Sender: " + msg.get("sender"))
+        print("Time: " + msg.get("time"))
+        body=""
+        for d in msg.findall("msg:div", ns):
+            body = body + ET.tostring(d, encoding="unicode")
+        print("Content: " + body)"""
+
+
+    """file = minidom.parse('movies.xml')
 
     print(file.firstChild.tagName)
 
@@ -25,7 +107,7 @@ def getRecord():
 
 
 
-    """models = file.getElementsByTagName('row')
+    models = file.getElementsByTagName('row')
     print('\nAll attributes:')
     for elem in models:
         print(elem.attributes['name'].value)
