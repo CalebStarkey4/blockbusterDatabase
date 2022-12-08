@@ -3,6 +3,7 @@ import sqlite3 as sql
 import xml.etree.ElementTree as ET
 from urllib.request import urlopen
 import gc
+import mysql.connector
 
 def addRecord():
     print("This is to add a record.")
@@ -17,6 +18,31 @@ def updateRecord():
 
     
 def getRecord():
+
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="Alpay21109.!",
+        database="MySQL80"
+)
+
+    """db = MySQLdb.connect(host="localhost",    # your host, usually localhost
+                        user="root",         # your username
+                        passwd="Alpay21109.!",  # your password
+                        db="MySQL80")        # name of the data base
+
+    # you must create a Cursor object. It will let
+    #  you execute all the queries you need
+    cur = db.cursor()
+
+    # Use all the SQL you like
+    cur.execute("SELECT * FROM YOUR_TABLE_NAME")
+
+    # print all the first cell of all the rows
+    for row in cur.fetchall():
+        print(row[0])
+
+    db.close()"""
 
     """conn = sql.connect("moviesDB.db")
     cur = conn.cursor()
@@ -35,7 +61,7 @@ def getRecord():
 
     
 
-    dburl = ("http://www.w3.org/2001/XMLSchema-instance")
+    """dburl = ("http://www.w3.org/2001/XMLSchema-instance")
 
     root = ET.parse(urlopen(dburl)).getroot()
     cpids = [el.text for el in root.findall('.//user/cpid')]
@@ -55,7 +81,7 @@ def getRecord():
 
     print(cpids)
 
-    gc.collect()
+    gc.collect()"""
 
     
 
@@ -99,15 +125,15 @@ def getRecord():
 
     print(file.firstChild.tagName)
 
-    title = file.getElementsByTagName("field")
-    print("%d fields:" % title.length)
+    title = file.getElementByTagName("MOV_ID")
+    print("%s fields:", title)"""
 
-    for skill in title:
-        print(skill.getAttribute("name"))
+    """for skill in title:
+        print(skill.getAttribute("name"))"""
 
 
 
-    models = file.getElementsByTagName('row')
+    """models = file.getElementsByTagName('row')
     print('\nAll attributes:')
     for elem in models:
         print(elem.attributes['name'].value)
