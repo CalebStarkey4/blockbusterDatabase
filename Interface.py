@@ -1,16 +1,19 @@
+from typing import Union
+from datetime import date
+
 # I'm going to have the app ask the user what they would like to do, with options to view, update, add, or delete an entry.
 print("Welcome to the blockbuster movie library.")
 keep_going = True
 while keep_going:
-    switch enterChoice():
+    match enter_choice():
         case 1: # View a single entry
             search_type = str.lower(input("Would you like to search by ID number or title (ID/Title)? "))
             while True:
                 if search_type == "id":
-                    display(getMoviesByID())
+                    display(get_movies_by_id())
                     break
                 elif search_type == "title":
-                    display(getMoviesByTitle())
+                    display(get_movies_by_title())
                     break
                 else:
                     search_type = input('Please enter either "ID" or "Title": ')
@@ -28,27 +31,27 @@ while keep_going:
             filter_options = ["year", "genre", "language", "rating"]
             filter_type = input(f"Which filter would you like to apply?\n{[f"{n} - {option}\n" for n, option in range(1, len(filter_options) + 1), filter_options]}")
             while True:
-                switch filter_type :
+                match filter_type :
                     case 1:
-                        display(getMoviesByYear())
+                        display(get_movies_by_year())
                         break
                     case 2:
-                        display(getMoviesByGenre())
+                        display(get_movies_by_genre())
                         break
                     case 3:
-                        display(getMoviesByLanguage())
+                        display(get_movies_by_language())
                         break
                     case 4:
-                        display(getMoviesByRating())
+                        display(get_moies_by_rating())
                         break
-                    default:
+                    case _:
                         filter_type = input (f"Please enter the number for one of the given options:\n{[f"{n} - {option}\n" for n, option in range(1, len(menu_options) + 1), menu_options]}\n")
             break
         case 6: # End the program
             keep_going = False
             break
 
-def enterChoice() -> int:
+def enter_choice() -> int:
     """A function that prompts the user for a choice and returns an integer 1-[option_count] to represent the chosen option, or 0 to indicate an error."""
     menu_options = ["View an entry", "Update an entry", "Add an entry", "Delete an entry", "View a subset of entries", "End the program"] 
     option_count = 6
@@ -59,43 +62,86 @@ def enterChoice() -> int:
         else: # if the user input is an invalid selection
             choice = input (f"Please enter the number for one of the given options:\n{[f"{n} - {option}\n" for n, option in range(1, len(menu_options) + 1), menu_options]}\n")
 
-def getMoviesByID() -> list:
+def get_movies_by_id() -> list:
     """Return a specific movie by ID."""
-    id = input(f"Please enter the ID of the movie you're looking for: ")
-    return ["This", "is", "a", "test"]
+    movies = []
+    while keep_going:
+        id = input(f"Please enter the ID of the movie you're looking for: ")
+        movie_id = 1234
+        movie_title = "This is a test"
+        movie_year = date(2002)
+        movie_genre = "This is a test"
+        movie_language = "This is a test"
+        movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+    return movies
 
-def getMoviesByYear() -> list:
+def get_movies_by_year() -> list:
     """Returns all movies made in the given year"""
-    return ["This", "is", "a", "test"]
+    movies = []
+    while keep_going:
+        min_year = input(f"Please enter the earliest year you want to see: ")
+        max_year = input(f"\nPlase enter the latest year you want to see:")
+        movie_id = 1234
+        movie_title = "This is a test"
+        movie_year = date(2002)
+        movie_genre = "This is a test"
+        movie_language = "This is a test"
+        movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+    return movies
 
-def getMoviesByGenre() -> list:
+def get_movies_by_genre() -> list:
     """Returns all movies of the given genre"""
-    return ["This", "is", "a", "test"]
+    movies = []
+    while keep_going:
+        id = input(f"Please enter the : ")
+        movie_id = 1234
+        movie_title = "This is a test"
+        movie_year = date(2002)
+        movie_genre = "This is a test"
+        movie_language = "This is a test"
+        movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+    return movies
 
-def getMoviesByLanguage() -> list:
+def get_movies_by_language() -> list:
     """Returns all movies in the given language"""
-    return ["This", "is", "a", "test"]
+    movies = []
+    while keep_going:
+        id = input(f"Please enter the ID of the movie you're looking for: ")
+        movie_id = 1234
+        movie_title = "This is a test"
+        movie_year = date(2002)
+        movie_genre = "This is a test"
+        movie_language = "This is a test"
+        movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+    return movies
 
-def getMoviesByRating() -> list:
+def get_moies_by_rating() -> list:
     """Returns all movies within a given range of ratings, or with a specific rating"""
-    return ["This", "is", "a", "test"]
+    movies = []
+    while keep_going:
+        id = input(f"Please enter the ID of the movie you're looking for: ")
+        movie_id = 1234
+        movie_title = "This is a test"
+        movie_year = date(2002)
+        movie_genre = "This is a test"
+        movie_language = "This is a test"
+        movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+    return movies
 
-def getMoviesByTitle() -> list:
+def get_movies_by_title() -> list:
     """Returns all movies whose titles contain the given string."""
-    return ["This", "is", "a", "test"]
-
-def deleteMovies() -> list:
-    """Drops a record from the database"""
-    return ["This", "is", "a", "test"]
-
-def updateMovies() -> list:
-    """Updates movie information in the database"""
-    id = input("Please enter the ID of the movie you want to update: ")
-    
-    return ["This", "is", "a", "test"]
-
-def addMovies():
-    """Adds a movie or movies to the database"""
+    movies = []
+    while keep_going:
+        id = input(f"Please enter the ID of the movie you're looking for: ")
+        movie_id = 1234
+        movie_title = "This is a test"
+        movie_year = date(2002)
+        movie_genre = "This is a test"
+        movie_language = "This is a test"
+        movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+    return movies
 
 def display(movies: list):
-    """Displays movie or list of movies to the user"""
+    """Displays movie or list of movies to the user from a list with the following structure: [id: int, title: str, year: datetime, genre: str, language: str]"""
+    for movie in movies:
+        print(f"{movie[0]} {movie[1]} {movie[2]} {movie[3]} {movie[4]}\n")
