@@ -24,8 +24,16 @@ def getRecord():
         user="root",
         passwd="Alpay21109.!",
         database="MySQL80"
-)
+    )
 
+    print(mydb)
+
+
+    
+    
+    
+    
+    
     """db = MySQLdb.connect(host="localhost",    # your host, usually localhost
                         user="root",         # your username
                         passwd="Alpay21109.!",  # your password
