@@ -1,5 +1,12 @@
 from typing import Union
 from datetime import date
+import Blockbuster as buster
+
+def confirm_quit(task_str: str = "there are no more movies you want to see") -> bool:
+    """Asks the user "Are you sure {task_str} (y/N)? "
+    Returns True if the user inputs 'Y' or 'y', otherwise returns false."""
+    answer = str.lower(input(f"Are you sure {task_str} (y/N)? "))
+    return True if answer == 'y' else False
 
 def enter_choice() -> int:
     """A function that prompts the user for a choice and returns an integer 1-[option_count] to represent the chosen option, or 0 to indicate an error."""
@@ -13,17 +20,24 @@ def enter_choice() -> int:
         else: # if the user input is an invalid selection
             choice = input (f"Please enter the number for one of the given options:\n{option_string}\n")
 
+    
+
 def get_movies_by_id() -> list:
     """Return a specific movie by ID."""
     movies = []
+    print("Please enter the IDs of the movies you're looking for (enter -1 to stop giving inputs):")
     while keep_going:
-        id = input(f"Please enter the ID of the movie you're looking for: ")
-        movie_id = 1234
-        movie_title = "This is a test"
-        movie_year = date(2002)
-        movie_genre = "This is a test"
-        movie_language = "This is a test"
-        movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+        id = input(f"$ ")
+        if id > 0:
+            movie = buster.getRecord(id)
+            movie_id = 1234 # derive this from movie once I have access to its structure so I can parse it
+            movie_title = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+            movie_year = date(2002) # derive this from movie once I have access to its structure so I can parse it
+            movie_genre = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+            movie_language = "This is a test" 
+            movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+        elif id == -1:
+            keep_going = confirm_quit
     return movies
 
 def get_movies_by_year() -> list:
@@ -32,50 +46,67 @@ def get_movies_by_year() -> list:
     while keep_going:
         min_year = input(f"Please enter the earliest year you want to see: ")
         max_year = input(f"\nPlase enter the latest year you want to see:")
-        movie_id = 1234
-        movie_title = "This is a test"
-        movie_year = date(2002)
-        movie_genre = "This is a test"
-        movie_language = "This is a test"
-        movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+        movies_from_db = buster.filterRecord()
+        for movie in movies_from_db:
+            movie_id = 1234 # derive this from movie once I have access to its structure so I can parse it
+            movie_title = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+            movie_year = date(2002) # derive this from movie once I have access to its structure so I can parse it
+            movie_genre = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+            movie_language = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+            movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
     return movies
 
 def get_movies_by_genre() -> list:
     """Returns all movies of the given genres"""
     movies = []
+    id_list = set()
+    genre_list = 
+    print('''Please enter the genres you're looking for (enter "done" to stop giving inputs):''')
     while keep_going:
-        id = input(f"Please enter the : ")
-        movie_id = 1234
-        movie_title = "This is a test"
-        movie_year = date(2002)
-        movie_genre = "This is a test"
-        movie_language = "This is a test"
-        movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+        genre = str.lower(input(f"$ "))
+        if genre in genre_list:
+            movies_from_db = buster.filterRecord()
+            for movie in movies_from_db:
+                movie_id = 1234 # derive this from movie once I have access to its structure so I can parse it
+                if movie_id not in id_list:
+                    movie_title = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+                    movie_year = date(2002) # derive this from movie once I have access to its structure so I can parse it
+                    movie_genre = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+                    movie_language = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+                    id_list += movie_id
+                    movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+        elif genre == "done":
+            keep_going = confirm_quit()
+        else:
+            print("That genre is not in this database, please try again")
     return movies
 
 def get_movies_by_language() -> list:
     """Returns all movies in the given languages"""
     movies = []
+    print('''Please enter the languages you're looking for (enter "done" to stop giving inputs):''')
     while keep_going:
-        id = input(f"Please enter the ID of the movie you're looking for: ")
-        movie_id = 1234
-        movie_title = "This is a test"
-        movie_year = date(2002)
-        movie_genre = "This is a test"
-        movie_language = "This is a test"
+        lang = input(f"$ ")
+        movie_id = 1234 # derive this from movie once I have access to its structure so I can parse it
+        movie_title = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+        movie_year = date(2002) # derive this from movie once I have access to its structure so I can parse it
+        movie_genre = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+        movie_language = "This is a test" # derive this from movie once I have access to its structure so I can parse it
         movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
     return movies
 
 def get_movies_by_rating() -> list:
     """Returns all movies with a given set of ratings, or with a specific rating"""
     movies = []
+    ratings = []
+    print('''Please enter the ratings you're looking for below (enter "done" to stop giving inputs):''')
     while keep_going:
-        id = input(f"Please enter the ID of the movie you're looking for: ")
-        movie_id = 1234
-        movie_title = "This is a test"
-        movie_year = date(2002)
-        movie_genre = "This is a test"
-        movie_language = "This is a test"
+        rating = input(f"$ ")
+        movie_id = 1234 # derive this from movie once I have access to its structure so I can parse it
+        movie_title = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+        movie_year = date(2002) # derive this from movie once I have access to its structure so I can parse it
+        movie_genre = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+        movie_language = "This is a test" # derive this from movie once I have access to its structure so I can parse it
         movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
     return movies
 
@@ -83,12 +114,13 @@ def get_movies_by_title() -> list:
     """Returns all movies whose titles contain the given string."""
     movies = []
     while keep_going:
-        id = input(f"Please enter the ID of the movie you're looking for: ")
-        movie_id = 1234
-        movie_title = "This is a test"
-        movie_year = date(2002)
-        movie_genre = "This is a test"
-        movie_language = "This is a test"
+        title_str = input(f"Please enter the title of the movie you're looking for: ")
+        # do regex things here
+        movie_id = 1234 # derive this from movie once I have access to its structure so I can parse it
+        movie_title = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+        movie_year = date(2002) # derive this from movie once I have access to its structure so I can parse it
+        movie_genre = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+        movie_language = "This is a test" # derive this from movie once I have access to its structure so I can parse it
         movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
     return movies
 
@@ -136,5 +168,5 @@ while keep_going:
                         filter_type = input (f"Please enter the number for one of the given options:\n{filter_string}\n")
             break
         case 3: # End the program
-            keep_going = False
+            keep_going = confirm_quit("")
             break
