@@ -1,6 +1,7 @@
-from typing import Union
+from typing import Union, List
 from datetime import date, datetime
 import Blockbuster as buster
+import re
 
 def confirm_choice(question: str = "Are you sure there are no more movies you want to see", default: str = 'n') -> bool:
     """Asks the user the given question, followed by " (y/n)? " with the default value capitalized. Returns True on a 'Y' or 'y' and False on a 'N' or 'n'.
@@ -145,26 +146,49 @@ def get_movies_by_rating() -> list:
             print("That rating is not in this database, please try again:")
     return movies
 
+def parse_string(tokens: List(str), and_or: str) -> List(str):
+    """takes a tokenized string and splits it around and_or, removing the and_or's in the process. Returns a list of strings."""
+    str_list = []
+    while and_or in tokens:
+        stop_point = tokens.index(and_or)
+        str_list.append(" ".join(tokens[:stop_point])) # join the tokens between the cursor and the AND/OR and put them into str_list
+        tokens = tokens[stop_point + 1:] # remove the portion of tokens that has been added to str_list
+    if len(tokens) > 0: # check to make sure the search string didn't end with AND/OR to avoid index out of bounds errors
+        str_list.append(" ".join(tokens))
+    return str_list
+
+
 def get_movies_by_title() -> list:
     """Returns all movies whose titles contain the given string."""
     movies = []
     print("Please enter the title of the movie you're looking for (press Enter on a blank input to cancel):")
     while keep_going:
         title_str = input(f"$ ")
-        # do regex things here
         if title_str == "":
             keep_going = confirm_choice("Are you sure you want to cancel")
         else:
-            movies_from_db = buster.filterRecord() # update this function call once the function is written
-            if movies_from_db == None:
-                keep_going = confirm_choice("We couldn't find any movies that match your search, would you like to search again")
-            for movie in movies_from_db:
-                movie_id = 1234 # derive this from movie once I have access to its structure so I can parse it
-                movie_title = "This is a test" # derive this from movie once I have access to its structure so I can parse it
-                movie_year = date(2002) # derive this from movie once I have access to its structure so I can parse it
-                movie_genre = "This is a test" # derive this from movie once I have access to its structure so I can parse it
-                movie_language = "This is a test" # derive this from movie once I have access to its structure so I can parse it
-                movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
+            # parse user input with regular expressions to allow for the use of AND and OR in title search
+            title_str_tokens = title_str.split() #tokenize the search string to make it easier to manage
+            if "AND" in title_str_tokens and "OR" in title_str_tokens:
+                print("Please use either AND or OR in your search, not both.")
+            else:
+                if "AND" in title_str_tokens:
+                    and_or = "AND"
+                elif "OR" in title_str_tokens:
+                    and_or = "OR"
+                else:
+                    and_or = None
+                str_list = title_str if and_or == None else []
+                movies_from_db = buster.filterRecord() # update this function call once the function is written
+                if movies_from_db == None:
+                    keep_going = confirm_choice("We couldn't find any movies that match your search, would you like to search again")
+                for movie in movies_from_db:
+                    movie_id = 1234 # derive this from movie once I have access to its structure so I can parse it
+                    movie_title = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+                    movie_year = date(2002) # derive this from movie once I have access to its structure so I can parse it
+                    movie_genre = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+                    movie_language = "This is a test" # derive this from movie once I have access to its structure so I can parse it
+                    movies += [movie_id, movie_title, movie_year, movie_genre, movie_language]
     return movies
 
 def display(movies: list):
