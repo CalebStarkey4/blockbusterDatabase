@@ -5,7 +5,7 @@ def enter_choice() -> int:
     """A function that prompts the user for a choice and returns an integer 1-[option_count] to represent the chosen option, or 0 to indicate an error."""
     menu_options = ["View an entry", "View a subset of entries", "End the program"] 
     nums = range(1, len(menu_options) + 1)
-    option_string = [f"{n} - {option}\n" for n in nums for option in menu_options]
+    option_string = [f"{n} - {option}\n" for n, option in zip(nums,menu_options)]
     choice = input(f"What would you like to do?\n{option_string}")
     while True: # loop until a valid option has been selected
         if 1 <= choice <= len(menu_options): # if a valid option has been selected
@@ -116,7 +116,8 @@ while keep_going:
             break
         case 2: # View a subset of entries
             filter_options = ["year", "genre", "language", "rating"]
-            filter_type = input(f"Which filter would you like to apply?\n{[f"{n} - {option}\n" for n, option in range(1, len(filter_options) + 1), filter_options]}")
+            filter_string = [f"{n} - {option}\n" for n, option in zip(range(1, len(filter_options) + 1), filter_options)]
+            filter_type = input(f"Which filter would you like to apply?\n{filter_string}")
             while True:
                 match filter_type :
                     case 1:
@@ -132,7 +133,7 @@ while keep_going:
                         display(get_movies_by_rating())
                         break
                     case _:
-                        filter_type = input (f"Please enter the number for one of the given options:\n{[f"{n} - {option}\n" for n, option in range(1, len(menu_options) + 1), menu_options]}\n")
+                        filter_type = input (f"Please enter the number for one of the given options:\n{filter_string}\n")
             break
         case 3: # End the program
             keep_going = False
