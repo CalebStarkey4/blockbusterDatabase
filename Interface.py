@@ -194,7 +194,7 @@ def get_movies_by_title() -> list:
 def display(movies: list):
     """Displays movie or list of movies to the user from a list with the following structure: [id: int, title: str, year: datetime, genre: str, language: str]"""
     for movie in movies:
-        print(f"{movie[0]} {movie[1]} {movie[2]} {movie[3]} {movie[4]}\n")
+        print(" ".join(movie))
 
 # I'm going to have the app ask the user what they would like to do, with options to view, update, add, or delete an entry.
 print("Welcome to the blockbuster movie library.")
